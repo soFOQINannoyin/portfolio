@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shama Udupa — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne+Mono&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#000;color:#fff;font-family:'Space Grotesk',sans-serif;overflow-x:hidden}
+
+#nav{position:sticky;top:0;z-index:200;background:rgba(0,0,0,.7);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;padding:0 40px}
+.nav-logo{font-family:'Syne Mono',monospace;font-size:11px;color:rgba(255,255,255,.55);letter-spacing:.2em;padding:16px 0}
+.nav-links{display:flex}
+.nav-link{font-size:10px;color:rgba(255,255,255,.45);padding:16px 16px;text-decoration:none;letter-spacing:.15em;text-transform:uppercase;transition:color .3s}
+.nav-link:hover,.nav-link.active{color:#fff}
+
+section{position:relative;overflow:hidden;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:100px 40px}
+
+/* HERO */
+#hero{padding:0;background:#000}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%}
+.hero-inner{position:relative;z-index:10;max-width:900px;width:100%;padding:40px}
+.hero-tag{font-family:'Syne Mono',monospace;font-size:10px;letter-spacing:.35em;color:rgba(255,255,255,.55);margin-bottom:28px;opacity:0;animation:fadeUp .8s .4s forwards}
+.hero-h1{font-size:clamp(42px,8vw,96px);font-weight:700;line-height:.95;letter-spacing:-.02em;margin-bottom:24px;opacity:0;animation:fadeUp 1s .7s forwards}
+.hero-h1 .dim{color:rgba(255,255,255,.25);display:block;font-weight:300}
+.hero-h1 .bright{color:#fff;display:block}
+.hero-desc{font-size:15px;color:rgba(255,255,255,.7);line-height:1.8;max-width:480px;margin-bottom:40px;opacity:0;animation:fadeUp .8s 1s forwards;font-weight:400}
+.hero-cta{display:inline-flex;align-items:center;gap:12px;font-family:'Syne Mono',monospace;font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.7);text-decoration:none;opacity:0;animation:fadeUp .8s 1.3s forwards;transition:color .3s;text-transform:uppercase}
+.hero-cta:hover{color:#fff}
+.hero-cta .arrow{width:40px;height:1px;background:rgba(255,255,255,.3);position:relative;transition:width .3s}
+.hero-cta:hover .arrow{width:60px;background:#fff}
+.hero-cta .arrow::after{content:'';position:absolute;right:-1px;top:-3px;width:6px;height:6px;border-right:1px solid rgba(255,255,255,.5);border-bottom:1px solid rgba(255,255,255,.5);transform:rotate(-45deg)}
+.scroll-line{position:absolute;bottom:0;left:40px;width:1px;height:80px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.2));animation:lineGrow 2s 2s forwards;transform:scaleY(0);transform-origin:top}
+@keyframes lineGrow{to{transform:scaleY(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+
+/* TICKER */
+.ticker{width:100%;background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:12px 0;overflow:hidden}
+.ticker-inner{display:flex;gap:60px;animation:tickerMove 30s linear infinite;white-space:nowrap}
+.ticker-item{font-family:'Syne Mono',monospace;font-size:9px;color:rgba(255,255,255,.25);letter-spacing:.2em;flex-shrink:0}
+.ticker-item span{color:rgba(100,180,255,.5);margin-right:8px}
+@keyframes tickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SHARED */
+.section-eyebrow{font-family:'Syne Mono',monospace;font-size:9px;letter-spacing:.35em;color:rgba(255,255,255,.2);margin-bottom:20px;text-transform:uppercase}
+.section-h2{font-size:clamp(28px,4vw,48px);font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-bottom:48px}
+.panel{max-width:860px;width:100%;z-index:10}
+.panel-header{font-family:'Syne Mono',monospace;font-size:10px;letter-spacing:.25em;color:#64B4FF;margin-bottom:32px;display:flex;align-items:center;gap:14px;text-transform:uppercase}
+.panel-header::before{content:'';width:28px;height:1px;background:#64B4FF;flex-shrink:0}
+.panel-header::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(100,180,255,.35),transparent)}
+
+/* ABOUT */
+#about{background:#000}
+#about-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.5}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.about-body p{font-size:14px;line-height:2;color:rgba(255,255,255,.78);margin-bottom:16px;font-weight:400}
+.about-body p b{color:#fff;font-weight:600}
+.about-body p a{color:#64B4FF;text-decoration:none}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.1);margin-top:32px;border:1px solid rgba(255,255,255,.1)}
+.stat{background:#0a0a0a;padding:16px;text-align:center;position:relative;overflow:hidden;cursor:default;transition:background .3s}
+.stat:hover{background:#111}
+.stat canvas{display:block;width:100%;height:60px;margin-bottom:8px}
+.stat .l{font-family:'Syne Mono',monospace;font-size:8px;color:rgba(255,255,255,.6);letter-spacing:.12em;line-height:1.6}
+#wormhole-canvas{width:100%;height:300px;display:block}
+.contact-bar{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.contact-chip{font-size:9px;color:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.15);padding:6px 12px;letter-spacing:.08em;transition:all .3s;font-family:'Syne Mono',monospace}
+.contact-chip:hover{color:#64B4FF;border-color:rgba(100,180,255,.5)}
+.contact-chip a{color:inherit;text-decoration:none}
+
+/* PROJECTS */
+#projects{background:#000;padding:100px 40px}
+#proj-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.4}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:rgba(255,255,255,.06);width:100%;max-width:860px}
+
+/* PROJECT CARDS with hover canvas */
+.proj-card{
+  background:#000;padding:32px;position:relative;overflow:hidden;cursor:pointer;
+  transform:translateY(20px);opacity:0;transition:transform .8s cubic-bezier(.22,1,.36,1),opacity .6s,background .3s
+}
+.proj-card.risen{transform:none;opacity:1}
+.proj-card:hover{background:rgba(255,255,255,.02)}
+.proj-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .4s;pointer-events:none}
+.proj-card:hover .proj-canvas{opacity:1}
+.scan-line{position:absolute;inset:0;background:linear-gradient(to bottom,transparent,rgba(100,180,255,.08),transparent);transform:translateY(-100%);pointer-events:none}
+.proj-card:hover .scan-line{animation:scan 1.2s ease-in-out forwards}
+@keyframes scan{to{transform:translateY(100%)}}
+.proj-num{font-family:'Syne Mono',monospace;font-size:8px;color:rgba(255,255,255,.35);letter-spacing:.2em;margin-bottom:16px}
+.proj-title{font-size:15px;font-weight:700;margin-bottom:10px;line-height:1.3;letter-spacing:-.01em;position:relative;z-index:2;color:#fff}
+.proj-desc{font-size:12px;color:rgba(255,255,255,.68);line-height:1.9;margin-bottom:18px;font-weight:400;position:relative;z-index:2}
+.proj-tags{display:flex;flex-wrap:wrap;gap:6px;position:relative;z-index:2}
+.ptag{font-family:'Syne Mono',monospace;font-size:8px;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.15);padding:3px 10px;letter-spacing:.08em}
+.ptag.b{color:#64B4FF;border-color:rgba(100,180,255,.35)}
+.ptag.p{color:#C87FFF;border-color:rgba(200,100,255,.35)}
+.ptag.g{color:#64FFB4;border-color:rgba(100,255,180,.35)}
+.ptag.o{color:#FFB464;border-color:rgba(255,180,100,.35)}
+.proj-click-hint{font-family:'Syne Mono',monospace;font-size:8px;color:rgba(100,180,255,.6);margin-top:14px;letter-spacing:.15em;position:relative;z-index:2}
+
+/* MISSION OVERLAY */
+#mission-overlay{
+  position:fixed;inset:0;background:rgba(0,0,10,.96);backdrop-filter:blur(16px);
+  display:none;z-index:999;overflow-y:auto
+}
+#mission-overlay.active{display:block}
+.mission-panel{width:90%;max-width:900px;margin:60px auto;padding-bottom:60px}
+.mission-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid rgba(100,180,255,.15)}
+.mission-id{font-family:'Syne Mono',monospace;font-size:11px;color:#64B4FF;letter-spacing:.3em}
+.mission-title-full{font-size:clamp(18px,3vw,28px);font-weight:700;letter-spacing:-.01em;color:#fff;margin-bottom:4px}
+#close-mission{background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.4);font-family:'Syne Mono',monospace;font-size:10px;padding:8px 16px;cursor:pointer;letter-spacing:.1em;transition:all .3s}
+#close-mission:hover{border-color:#64B4FF;color:#64B4FF}
+.terminal{border:1px solid rgba(100,180,255,.15);padding:16px;height:100px;overflow:hidden;margin-bottom:24px;font-family:'Syne Mono',monospace;font-size:10px;color:rgba(100,180,255,.7);line-height:1.8;background:rgba(100,180,255,.03)}
+#mission-canvas{width:100%;height:220px;display:block;margin-bottom:24px;border:1px solid rgba(255,255,255,.06)}
+.mission-body{font-size:12px;color:rgba(255,255,255,.5);line-height:2;font-weight:300}
+.mission-body h4{font-family:'Syne Mono',monospace;font-size:9px;color:rgba(100,180,255,.5);letter-spacing:.2em;margin-bottom:12px;margin-top:20px}
+.mission-body p{margin-bottom:10px}
+.mission-body .highlight{color:rgba(100,255,180,.7);font-weight:500}
+.mission-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+
+/* EXPERIENCE */
+#experience{background:#000}
+#exp-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.35}
+.exp-cols{display:grid;grid-template-columns:280px 1fr;gap:60px;align-items:start}
+.exp-card-hover{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.06);padding:24px;margin-bottom:1px;transition:border-color .3s,background .3s;cursor:default}
+.exp-card-hover:hover{border-color:rgba(100,180,255,.3);background:rgba(100,180,255,.03)}
+.exp-card-hover canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .4s;pointer-events:none}
+.exp-card-hover:hover canvas{opacity:1}
+.exp-card-inner{position:relative;z-index:2}
+.exp-role{font-size:20px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px;color:#fff}
+.exp-company{font-family:'Syne Mono',monospace;font-size:10px;color:#64B4FF;letter-spacing:.12em;margin-bottom:6px}
+.exp-period{font-family:'Syne Mono',monospace;font-size:9px;color:rgba(255,255,255,.45);letter-spacing:.1em;margin-bottom:16px}
+.exp-intro{font-size:14px;color:rgba(255,255,255,.82);line-height:1.9;margin-bottom:24px;font-weight:400;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.1)}
+.exp-bullets{display:flex;flex-direction:column;gap:18px}
+.exp-bullet{font-size:12px;color:rgba(255,255,255,.72);line-height:1.9;padding-left:20px;position:relative;font-weight:400}
+.exp-bullet::before{content:'';position:absolute;left:0;top:10px;width:6px;height:1px;background:#64B4FF}
+.exp-bullet b{color:#fff;font-weight:600}
+.exp-lift{display:inline-block;font-family:'Syne Mono',monospace;font-size:10px;color:#64FFB4;border:1px solid rgba(100,255,180,.35);padding:3px 10px;margin-top:8px}
+.node-exp{margin-top:32px;padding-top:28px;border-top:1px solid rgba(255,255,255,.08)}
+.node-role{font-size:15px;font-weight:600;margin-bottom:4px;color:#fff}
+
+/* SKILLS */
+#skills{background:#000}
+#skills-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.4}
+.skills-cols{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.skills-group-label{font-family:'Syne Mono',monospace;font-size:9px;color:rgba(255,255,255,.45);letter-spacing:.2em;margin-bottom:24px}
+.skill-row{margin-bottom:20px}
+.skill-top{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.8);margin-bottom:8px;font-weight:400}
+.skill-top span:last-child{font-family:'Syne Mono',monospace;font-size:9px;color:rgba(255,255,255,.4)}
+.skill-track{height:2px;background:rgba(255,255,255,.1)}
+.skill-fill{height:100%;width:0;transition:width 2s cubic-bezier(.22,1,.36,1)}
+.sf-b{background:linear-gradient(90deg,rgba(100,180,255,.3),#64B4FF)}
+.sf-p{background:linear-gradient(90deg,rgba(168,100,255,.3),#A864FF)}
+.sf-g{background:linear-gradient(90deg,rgba(100,255,180,.3),#64FFB4)}
+.sf-o{background:linear-gradient(90deg,rgba(255,180,100,.3),#FFB464)}
+.tags-section{margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,.08)}
+.tags-label{font-family:'Syne Mono',monospace;font-size:9px;color:rgba(255,255,255,.4);letter-spacing:.2em;margin-bottom:16px}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:8px}
+.ttag{font-family:'Syne Mono',monospace;font-size:8px;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.12);padding:5px 12px;letter-spacing:.08em;transition:all .3s}
+.ttag:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+
+/* EDUCATION */
+#education{min-height:auto;padding:80px 40px;background:#000}
+.edu-strip{max-width:860px;width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06)}
+.edu-card{background:#000;padding:28px;transition:background .3s}
+.edu-card:hover{background:rgba(255,255,255,.02)}
+.edu-year{font-family:'Syne Mono',monospace;font-size:9px;color:rgba(255,255,255,.45);letter-spacing:.15em;margin-bottom:12px}
+.edu-deg{font-size:13px;font-weight:600;line-height:1.4;margin-bottom:6px;color:#fff}
+.edu-inst{font-size:11px;color:rgba(255,255,255,.55);font-weight:400}
+
+/* CONTACT */
+#contact{background:#000;min-height:70vh}
+#contact-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.5}
+.contact-inner{position:relative;z-index:10;text-align:center;max-width:600px}
+.contact-h{font-size:clamp(36px,6vw,72px);font-weight:700;letter-spacing:-.03em;line-height:1;margin-bottom:16px}
+.contact-h .dim{color:rgba(255,255,255,.15);font-weight:300}
+.contact-sub{font-family:'Syne Mono',monospace;font-size:9px;color:rgba(255,255,255,.2);letter-spacing:.25em;margin-bottom:40px}
+.contact-row{display:flex;gap:0;justify-content:center;border:1px solid rgba(255,255,255,.08);margin-bottom:20px;flex-wrap:wrap}
+.clink{font-family:'Syne Mono',monospace;font-size:9px;color:rgba(255,255,255,.3);text-decoration:none;padding:14px 24px;letter-spacing:.15em;border-right:1px solid rgba(255,255,255,.06);transition:all .3s;text-transform:uppercase}
+.clink:last-child{border-right:none}
+.clink:hover{color:#fff;background:rgba(255,255,255,.04)}
+.contact-coords{font-family:'Syne Mono',monospace;font-size:9px;color:rgba(255,255,255,.15);letter-spacing:.1em;margin-top:40px}
+.footer{font-family:'Syne Mono',monospace;font-size:7px;color:rgba(255,255,255,.1);letter-spacing:.2em;margin-top:60px}
+
+.rise{opacity:0;transform:translateY(40px);transition:opacity .9s,transform 1s cubic-bezier(.22,1,.36,1)}
+.rise.risen{opacity:1;transform:none}
+
+@media(max-width:680px){
+  .about-grid,.exp-cols,.skills-cols{grid-template-columns:1fr!important}
+  .edu-strip{grid-template-columns:1fr!important}
+  #nav{padding:0 16px}
+  .nav-links{display:none}
+  section{padding:80px 20px}
+}
+</style>
+</head>
+<body>
+
+<div id="nav">
+  <div class="nav-logo">SU // PORTFOLIO</div>
+  <div class="nav-links">
+    <a class="nav-link active" href="#hero">Home</a>
+    <a class="nav-link" href="#about">About</a>
+    <a class="nav-link" href="#projects">Projects</a>
+    <a class="nav-link" href="#experience">Experience</a>
+    <a class="nav-link" href="#skills">Skills</a>
+    <a class="nav-link" href="#contact">Contact</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-inner">
+    <p class="hero-tag">AI &amp; ML Engineer · Bangalore · 2026</p>
+    <h1 class="hero-h1">
+      <span class="dim">Shama</span>
+      <span class="bright">Udupa</span>
+    </h1>
+    <p class="hero-desc">Building intelligent systems — from blockchain-secured platforms to gradient boosting models processing 8M+ rows of telecom data.</p>
+    <a href="#about" class="hero-cta">Explore <span class="arrow"></span></a>
+  </div>
+  <div class="scroll-line"></div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <div class="ticker-item"><span>ROLE</span>DS INTERN @ PELATRO</div>
+    <div class="ticker-item"><span>GRAD</span>BIT BANGALORE · 2026</div>
+    <div class="ticker-item"><span>STACK</span>PYTHON · SOLIDITY · OPENCV</div>
+    <div class="ticker-item"><span>DOMAIN</span>BLOCKCHAIN · CV · ML · IOT</div>
+    <div class="ticker-item"><span>MUSIC</span>KARNATIC · JUNIOR DEGREE</div>
+    <div class="ticker-item"><span>DANCE</span>BHARATHANATYAM · JUNIOR DEGREE</div>
+    <div class="ticker-item"><span>ALSO</span>BADMINTON · GUITAR · SWIMMING · BOOKS</div>
+    <div class="ticker-item"><span>ROLE</span>DS INTERN @ PELATRO</div>
+    <div class="ticker-item"><span>GRAD</span>BIT BANGALORE · 2026</div>
+    <div class="ticker-item"><span>STACK</span>PYTHON · SOLIDITY · OPENCV</div>
+    <div class="ticker-item"><span>DOMAIN</span>BLOCKCHAIN · CV · ML · IOT</div>
+    <div class="ticker-item"><span>MUSIC</span>KARNATIC · JUNIOR DEGREE</div>
+    <div class="ticker-item"><span>DANCE</span>BHARATHANATYAM · JUNIOR DEGREE</div>
+    <div class="ticker-item"><span>ALSO</span>BADMINTON · GUITAR · SWIMMING · BOOKS</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <canvas id="about-canvas"></canvas>
+  <div class="panel rise" id="about-rise">
+    <div class="panel-header">Transmission 01 — About</div>
+    <div class="about-grid">
+      <div class="about-body">
+        <p>I'm an <b>AI & ML undergrad</b> at Bangalore Institute of Technology, graduating 2026. I build end-to-end systems — not just models.</p>
+        <p>Currently a <b>Data Science Intern at Pelatro</b>, where I've built churn prediction pipelines, trained ensemble gradient boosting models, and processed subscriber behaviour across millions of telecom records.</p>
+        <p>Outside ML, I've shipped a <b>blockchain exam platform</b> on Ethereum, built computer vision systems with OpenCV, and led creative direction for <b>NODE.AI</b> — BIT's techno-cultural club.</p>
+        <p>Reach me at <a href="mailto:shamaudupa@gmail.com">shamaudupa@gmail.com</a> or <a href="tel:6364811573">+91 63648 11573</a>.</p>
+        <div class="stats">
+          <div class="stat"><canvas id="hc-music"></canvas><div class="l">KARNATIC MUSIC<br>10+ YRS · JUNIOR DEGREE</div></div>
+          <div class="stat"><canvas id="hc-dance"></canvas><div class="l">BHARATHANATYAM<br>10+ YRS · JUNIOR DEGREE</div></div>
+          <div class="stat"><canvas id="hc-sport"></canvas><div class="l">BADMINTON · SWIMMING<br>GUITAR</div></div>
+          <div class="stat"><canvas id="hc-books"></canvas><div class="l">AVID READER<br>BOOKS ARE PORTALS</div></div>
+        </div>
+        <div class="contact-bar">
+          <div class="contact-chip"><a href="mailto:shamaudupa@gmail.com">shamaudupa@gmail.com</a></div>
+          <div class="contact-chip"><a href="tel:6364811573">+91 63648 11573</a></div>
+          <div class="contact-chip"><a href="https://github.com" target="_blank">github.com</a></div>
+          <div class="contact-chip"><a href="https://linkedin.com" target="_blank">linkedin.com</a></div>
+        </div>
+      </div>
+      <canvas id="wormhole-canvas"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <canvas id="proj-canvas"></canvas>
+  <div class="panel">
+    <div class="panel-header rise" id="proj-hdr">Transmission 02 — Projects</div>
+    <div class="proj-grid">
+
+      <div class="proj-card" data-type="blockchain" data-delay="0">
+        <canvas class="proj-canvas"></canvas>
+        <div class="scan-line"></div>
+        <div class="proj-num">01 / 05</div>
+        <div class="proj-title">Decentralized Exam Paper Distribution</div>
+        <div class="proj-desc">Role-based platform with 2FA educator auth, admin vetting, and immutable Solidity smart contract logging on Ethereum.</div>
+        <div class="proj-tags"><span class="ptag b">Ethereum</span><span class="ptag b">Solidity</span><span class="ptag p">IPFS</span><span class="ptag g">Cryptography</span></div>
+        <div class="proj-click-hint">CLICK TO EXPLORE ↗</div>
+      </div>
+
+      <div class="proj-card" data-type="vision" data-delay="100">
+        <canvas class="proj-canvas"></canvas>
+        <div class="scan-line"></div>
+        <div class="proj-num">02 / 05</div>
+        <div class="proj-title">Criminal Face Detection System</div>
+        <div class="proj-desc">Surveillance face recognition using OpenCV — Haar cascades and LBPH for suspect identification from image and video.</div>
+        <div class="proj-tags"><span class="ptag b">OpenCV</span><span class="ptag">Python</span><span class="ptag p">LBPH</span><span class="ptag g">Haar Cascades</span></div>
+        <div class="proj-click-hint">CLICK TO EXPLORE ↗</div>
+      </div>
+
+      <div class="proj-card" data-type="iot" data-delay="200">
+        <canvas class="proj-canvas"></canvas>
+        <div class="scan-line"></div>
+        <div class="proj-num">03 / 05</div>
+        <div class="proj-title">Automatic Poster Unfurler</div>
+        <div class="proj-desc">IoT automated poster unveiling system using Arduino UNO and stepper motors with precision-sized mechanical coupling.</div>
+        <div class="proj-tags"><span class="ptag b">Arduino UNO</span><span class="ptag">IoT</span><span class="ptag p">Stepper Motors</span><span class="ptag g">Embedded</span></div>
+        <div class="proj-click-hint">CLICK TO EXPLORE ↗</div>
+      </div>
+
+      <div class="proj-card" data-type="traffic" data-delay="300">
+        <canvas class="proj-canvas"></canvas>
+        <div class="scan-line"></div>
+        <div class="proj-num">04 / 05</div>
+        <div class="proj-title">Real-Time Car Counter</div>
+        <div class="proj-desc">Vehicle tracking system using OpenCV and Python for real-time traffic monitoring and video-based data analysis.</div>
+        <div class="proj-tags"><span class="ptag b">OpenCV</span><span class="ptag">Python</span><span class="ptag p">Computer Vision</span></div>
+        <div class="proj-click-hint">CLICK TO EXPLORE ↗</div>
+      </div>
+
+      <div class="proj-card" data-type="network" data-delay="400">
+        <canvas class="proj-canvas"></canvas>
+        <div class="scan-line"></div>
+        <div class="proj-num">05 / 05</div>
+        <div class="proj-title">Online Voting System</div>
+        <div class="proj-desc">Secure web-based voting with admin access control and voter authentication via HTML, XML, Apache and MySQL.</div>
+        <div class="proj-tags"><span class="ptag">HTML</span><span class="ptag g">MySQL</span><span class="ptag">Apache</span><span class="ptag p">XML</span></div>
+        <div class="proj-click-hint">CLICK TO EXPLORE ↗</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MISSION OVERLAY -->
+<div id="mission-overlay">
+  <div class="mission-panel">
+    <div class="mission-header">
+      <div>
+        <div class="mission-id" id="mission-id">MISSION 01</div>
+        <div class="mission-title-full" id="mission-title-full"></div>
+      </div>
+      <button id="close-mission">✕ CLOSE</button>
+    </div>
+    <div class="terminal" id="terminal"></div>
+    <canvas id="mission-canvas"></canvas>
+    <div class="mission-body" id="mission-body"></div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <canvas id="exp-canvas"></canvas>
+  <div class="panel rise" id="exp-rise">
+    <div class="panel-header">Transmission 03 — Experience</div>
+    <div class="exp-cols">
+      <div>
+        <div class="exp-card-hover" data-exp="pelatro">
+          <canvas></canvas>
+          <div class="exp-card-inner">
+            <div class="exp-role">Data Science Intern</div>
+            <div class="exp-company">PELATRO</div>
+            <div class="exp-period">SEPT 2025 — SEPT 2026</div>
+            <div class="proj-tags" style="margin-bottom:0">
+              <span class="ptag b">LightGBM</span><span class="ptag b">XGBoost</span><span class="ptag p">CatBoost</span><span class="ptag g">Pandas</span><span class="ptag g">Polars</span><span class="ptag">SQL</span><span class="ptag p">Churn Analysis</span>
+            </div>
+          </div>
+        </div>
+        <div class="node-exp">
+          <div class="exp-card-hover" data-exp="node" style="border:1px solid rgba(255,255,255,.06);padding:24px">
+            <canvas></canvas>
+            <div class="exp-card-inner">
+              <div class="exp-period" style="margin-top:0">2023 — 2025</div>
+              <div class="node-role">Creative Lead</div>
+              <div class="exp-company">NODE.AI · BIT BANGALORE</div>
+              <div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:12px;line-height:1.9;font-weight:400">Led technical event coordination, social media campaigns, and video production for BIT's techno-cultural club — boosting event attendance significantly.</div>
+              <div class="proj-tags" style="margin-top:12px">
+                <span class="ptag p">Leadership</span><span class="ptag">Video Editing</span><span class="ptag g">Social Media</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="exp-intro">End-to-end predictive modeling for telecom clients — churn prediction, cross-sell propensity, and subscriber behaviour analytics across <b>8M+ rows of CDR data</b>.</p>
+        <div style="font-family:'Syne Mono',monospace;font-size:8px;color:rgba(100,180,255,.6);letter-spacing:.2em;margin-bottom:16px">// KEY CONTRIBUTIONS @ PELATRO</div>
+        <div class="exp-bullets">
+          <div class="exp-bullet">Built automated feature engineering pipelines from raw multi-format telecom data — rolling time-window features, behavioural patterns, activity flags, and cross-service interaction metrics across voice, SMS, and data sources.</div>
+          <div class="exp-bullet">Designed <b>leakage-free training pipelines</b> with rolling date splits using Pandas/Polars, resolving subscriber identities across sources for strict temporal consistency.</div>
+          <div class="exp-bullet">Trained and tuned <b>LightGBM, XGBoost, CatBoost</b> with ensemble blending.<div class="exp-lift">↑ Decile lift 3.9 — outperformed client baseline</div></div>
+          <div class="exp-bullet">Conducted EDA, SQL-based analysis, and large-scale data ingestion workflows supporting model development and business insight generation.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <canvas id="skills-canvas"></canvas>
+  <div class="panel rise" id="skills-rise">
+    <div class="panel-header">Transmission 04 — Skills</div>
+    <div class="skills-cols">
+      <div>
+        <div class="skills-group-label">// LANGUAGES</div>
+        <div class="skill-row"><div class="skill-top"><span>Python</span><span>Advanced</span></div><div class="skill-track"><div class="skill-fill sf-b" data-w="88"></div></div></div>
+        <div class="skill-row"><div class="skill-top"><span>Java</span><span>Proficient</span></div><div class="skill-track"><div class="skill-fill sf-p" data-w="74"></div></div></div>
+        <div class="skill-row"><div class="skill-top"><span>JavaScript</span><span>Intermediate</span></div><div class="skill-track"><div class="skill-fill sf-g" data-w="64"></div></div></div>
+        <div class="skill-row"><div class="skill-top"><span>C</span><span>Intermediate</span></div><div class="skill-track"><div class="skill-fill sf-o" data-w="64"></div></div></div>
+        <div class="skill-row"><div class="skill-top"><span>HTML / CSS</span><span>Proficient</span></div><div class="skill-track"><div class="skill-fill sf-b" data-w="78"></div></div></div>
+        <div class="skill-row"><div class="skill-top"><span>Solidity</span><span>Working</span></div><div class="skill-track"><div class="skill-fill sf-p" data-w="54"></div></div></div>
+      </div>
+      <div>
+        <div class="skills-group-label">// ML &amp; DATA</div>
+        <div class="skill-row"><div class="skill-top"><span>LightGBM / XGBoost / CatBoost</span></div><div class="skill-track"><div class="skill-fill sf-g" data-w="86"></div></div></div>
+        <div class="skill-row"><div class="skill-top"><span>Pandas / Polars</span></div><div class="skill-track"><div class="skill-fill sf-b" data-w="88"></div></div></div>
+        <div class="skill-row"><div class="skill-top"><span>OpenCV &amp; Computer Vision</span></div><div class="skill-track"><div class="skill-fill sf-p" data-w="80"></div></div></div>
+        <div class="skill-row"><div class="skill-top"><span>PostgreSQL / MySQL / MongoDB</span></div><div class="skill-track"><div class="skill-fill sf-o" data-w="76"></div></div></div>
+        <div class="skill-row"><div class="skill-top"><span>Power BI / Tableau</span></div><div class="skill-track"><div class="skill-fill sf-g" data-w="68"></div></div></div>
+        <div class="skill-row"><div class="skill-top"><span>Git / Linux</span></div><div class="skill-track"><div class="skill-fill sf-b" data-w="82"></div></div></div>
+      </div>
+    </div>
+    <div class="tags-section">
+      <div class="tags-label">// ALSO IN THE STACK</div>
+      <div class="tag-cloud">
+        <span class="ttag">Ethereum</span><span class="ttag">IPFS</span><span class="ttag">Smart Contracts</span><span class="ttag">Arduino</span><span class="ttag">Adobe Premiere</span><span class="ttag">Photoshop</span><span class="ttag">AutoCAD</span><span class="ttag">Jupyter</span><span class="ttag">VS Code</span><span class="ttag">Tableau</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" style="min-height:auto;padding:80px 40px">
+  <div class="edu-strip rise" id="edu-rise">
+    <div class="edu-card">
+      <div class="edu-year">2022 → 2026</div>
+      <div class="edu-deg">B.E. Artificial Intelligence &amp; Machine Learning</div>
+      <div class="edu-inst">Bangalore Institute of Technology</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-year">2020 → 2022</div>
+      <div class="edu-deg">CBSE Class XII — PCMC</div>
+      <div class="edu-inst">Narayana PU College</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-year">2020</div>
+      <div class="edu-deg">CBSE Class X</div>
+      <div class="edu-inst">PSBB LLA</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <canvas id="contact-canvas"></canvas>
+  <div class="contact-inner rise" id="contact-rise">
+    <h2 class="contact-h"><span class="dim">Let's</span><br>Connect</h2>
+    <p class="contact-sub">Open to DS · ML · AI roles &amp; collaborations</p>
+    <div class="contact-row">
+      <a href="mailto:shamaudupa@gmail.com" class="clink">Email</a>
+      <a href="tel:6364811573" class="clink">Call</a>
+      <a href="https://linkedin.com" target="_blank" class="clink">LinkedIn</a>
+      <a href="https://github.com" target="_blank" class="clink">GitHub</a>
+    </div>
+    <div class="contact-coords">shamaudupa@gmail.com · +91 63648 11573 · Bangalore, India</div>
+    <div class="footer">© 2026 SHAMA UDUPA · AI &amp; ML · BIT BANGALORE</div>
+  </div>
+</section>
+
+<script>
+const COLORS=['#64B4FF','#A864FF','#64FFB4','#FFB464','#FF6AB0','#fff'];
+
+/* ── HERO warp tunnel ── */
+(function(){
+  const c=document.getElementById('hero-canvas'),ctx=c.getContext('2d');
+  let W,H,lines=[],t=0;
+  function resize(){
+    W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;
+    lines=Array.from({length:200},()=>({angle:Math.random()*Math.PI*2,speed:1+Math.random()*3,len:40+Math.random()*120,z:Math.random(),col:COLORS[Math.floor(Math.random()*COLORS.length)]}));
+  }
+  function frame(){
+    t++;ctx.fillStyle='rgba(0,0,0,.18)';ctx.fillRect(0,0,W,H);
+    const cx=W/2,cy=H/2;
+    lines.forEach(l=>{
+      l.z+=l.speed*.004;if(l.z>1)l.z=0;
+      const r=l.z*Math.min(W,H)*.55;
+      const x1=cx+Math.cos(l.angle)*r*.7,y1=cy+Math.sin(l.angle)*r*.38;
+      const x2=cx+Math.cos(l.angle)*(r+l.len*l.z*.5),y2=cy+Math.sin(l.angle)*(r+l.len*l.z*.5)*.68;
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);
+      ctx.strokeStyle=l.col;ctx.globalAlpha=l.z*.35;ctx.lineWidth=l.z*1.5;ctx.stroke();ctx.globalAlpha=1;
+    });
+    requestAnimationFrame(frame);
+  }
+  resize();window.addEventListener('resize',resize);frame();
+})();
+
+/* ── WORMHOLE (about) ── */
+(function(){
+  const c=document.getElementById('wormhole-canvas'),ctx=c.getContext('2d');
+  let W,H,t=0,rings=[];
+  function resize(){
+    W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;
+    rings=Array.from({length:30},(_,i)=>({r:i/30,col:COLORS[i%COLORS.length]}));
+  }
+  function frame(){
+    t+=.008;ctx.clearRect(0,0,W,H);
+    const cx=W/2,cy=H/2;
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,80);
+    g.addColorStop(0,'rgba(100,180,255,.12)');g.addColorStop(1,'transparent');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    rings.forEach(ring=>{
+      const progress=(ring.r+t*.15)%1;
+      const radius=progress*Math.min(W,H)*.44;
+      ctx.beginPath();ctx.ellipse(cx,cy,radius,radius*.45,0,0,Math.PI*2);
+      ctx.strokeStyle=ring.col;ctx.globalAlpha=(1-progress)*.4;ctx.lineWidth=1;ctx.stroke();ctx.globalAlpha=1;
+    });
+    for(let i=0;i<8;i++){
+      const a=t*(.5+i*.1)+i*Math.PI*.25,r=55+i*12;
+      const px=cx+Math.cos(a)*r,py=cy+Math.sin(a)*r*.45;
+      ctx.beginPath();ctx.arc(px,py,2,0,Math.PI*2);
+      ctx.fillStyle=COLORS[i%COLORS.length];ctx.globalAlpha=.7;ctx.fill();ctx.globalAlpha=1;
+    }
+    requestAnimationFrame(frame);
+  }
+  resize();window.addEventListener('resize',resize);frame();
+})();
+
+/* ── SHARED star bg ── */
+function makeStarBg(id,count){
+  const c=document.getElementById(id);if(!c)return;
+  const ctx=c.getContext('2d');let W,H,stars=[],t=0;
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;stars=Array.from({length:count},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+.3,p:Math.random()*Math.PI*2,sp:.005+Math.random()*.008,col:COLORS[Math.floor(Math.random()*COLORS.length)]}));}
+  function frame(){t++;ctx.clearRect(0,0,W,H);stars.forEach(s=>{const a=.25+Math.sin(t*s.sp+s.p)*.25;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=s.col;ctx.globalAlpha=Math.max(0,a);ctx.fill();ctx.globalAlpha=1;});requestAnimationFrame(frame);}
+  resize();window.addEventListener('resize',resize);frame();
+}
+makeStarBg('about-canvas',80);makeStarBg('proj-canvas',60);makeStarBg('exp-canvas',70);makeStarBg('skills-canvas',90);
+
+/* ── CONTACT particle field ── */
+(function(){
+  const c=document.getElementById('contact-canvas'),ctx=c.getContext('2d');
+  let W,H,particles=[],t=0;
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;particles=Array.from({length:55},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.15,r:Math.random()*1.2+.3,col:COLORS[Math.floor(Math.random()*COLORS.length)],p:Math.random()*Math.PI*2}));}
+  function frame(){t++;ctx.fillStyle='rgba(0,0,0,.04)';ctx.fillRect(0,0,W,H);particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.p+=.02;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.col;ctx.globalAlpha=.18+Math.sin(p.p)*.12;ctx.fill();ctx.globalAlpha=1;});requestAnimationFrame(frame);}
+  resize();window.addEventListener('resize',resize);frame();
+})();
+
+/* ── PROJECT CARD HOVER ANIMATIONS ── */
+document.querySelectorAll('.proj-card').forEach(card=>{
+  const c=card.querySelector('.proj-canvas');
+  const ctx=c.getContext('2d');
+  let W,H,t=0,run=false,animId;
+  const type=card.dataset.type;
+
+  function resize(){W=c.width=card.offsetWidth;H=c.height=card.offsetHeight;}
+
+  function draw(){
+    if(!run)return;
+    t+=.025;
+    ctx.clearRect(0,0,W,H);
+
+    if(type==='blockchain'){
+      /* grid of glowing blocks — ledger chain feel */
+      for(let x=0;x<W;x+=28){
+        for(let y=0;y<H;y+=28){
+          if(Math.sin(x*.1+y*.08+t)>.7){
+            ctx.strokeStyle='rgba(100,180,255,.3)';
+            ctx.lineWidth=1;
+            ctx.strokeRect(x+2,y+2,22,22);
+            ctx.fillStyle='rgba(100,180,255,.05)';
+            ctx.fillRect(x+2,y+2,22,22);
+          }
+        }
+      }
+      /* connecting lines */
+      ctx.strokeStyle='rgba(100,180,255,.12)';ctx.lineWidth=1;
+      for(let i=0;i<5;i++){
+        const x1=Math.sin(t+i)*W*.4+W/2,y1=Math.cos(t*.7+i)*H*.4+H/2;
+        const x2=Math.sin(t+i+1)*W*.4+W/2,y2=Math.cos(t*.7+i+1)*H*.4+H/2;
+        ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+      }
+    }
+
+    if(type==='vision'){
+      /* scan lines + face detection boxes */
+      const scanY=(t*60)%H;
+      ctx.fillStyle='rgba(255,100,100,.15)';ctx.fillRect(0,scanY,W,2);
+      ctx.strokeStyle='rgba(255,100,100,.2)';ctx.lineWidth=1;
+      /* detection box */
+      const bx=W*.25,by=H*.15,bw=W*.5,bh=H*.7;
+      ctx.strokeRect(bx,by,bw,bh);
+      /* corners emphasis */
+      const cs=12;
+      [[bx,by],[bx+bw,by],[bx,by+bh],[bx+bw,by+bh]].forEach(([cx,cy])=>{
+        ctx.beginPath();ctx.moveTo(cx-cs,cy);ctx.lineTo(cx+cs,cy);ctx.moveTo(cx,cy-cs);ctx.lineTo(cx,cy+cs);ctx.stroke();
+      });
+      /* dot grid */
+      ctx.fillStyle='rgba(255,100,100,.1)';
+      for(let x=0;x<W;x+=20){for(let y=0;y<H;y+=20){ctx.fillRect(x,y,1,1);}}
+    }
+
+    if(type==='iot'){
+      /* pulsing signal rings */
+      for(let i=0;i<4;i++){
+        const r=((t*.8+i*.4)%1)*Math.min(W,H)*.45;
+        const alpha=(1-((t*.8+i*.4)%1))*.4;
+        ctx.beginPath();ctx.arc(W/2,H/2,r,0,Math.PI*2);
+        ctx.strokeStyle=`rgba(100,255,180,${alpha})`;ctx.lineWidth=1;ctx.stroke();
+      }
+      /* center node */
+      ctx.beginPath();ctx.arc(W/2,H/2,5,0,Math.PI*2);
+      ctx.fillStyle='rgba(100,255,180,.8)';ctx.fill();
+      /* signal dots */
+      for(let i=0;i<6;i++){
+        const a=t*.5+i*Math.PI/3,r=40+Math.sin(t+i)*15;
+        ctx.beginPath();ctx.arc(W/2+Math.cos(a)*r,H/2+Math.sin(a)*r,2,0,Math.PI*2);
+        ctx.fillStyle='rgba(100,255,180,.5)';ctx.fill();
+      }
+    }
+
+    if(type==='traffic'){
+      /* lanes with moving vehicles */
+      const lanes=3;
+      for(let l=0;l<lanes;l++){
+        const y=H*(l+1)/(lanes+1);
+        ctx.strokeStyle='rgba(255,180,100,.1)';ctx.lineWidth=1;ctx.setLineDash([8,8]);
+        ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();ctx.setLineDash([]);
+        /* vehicles */
+        for(let v=0;v<3;v++){
+          const vx=((t*50*(1+l*.3)+v*160)%W+W)%W;
+          ctx.fillStyle=`rgba(255,180,100,.4)`;
+          ctx.fillRect(vx-10,y-4,18,8);
+          /* headlight dots */
+          ctx.fillStyle='rgba(255,220,100,.8)';
+          ctx.fillRect(vx+6,y-2,3,4);
+        }
+      }
+    }
+
+    if(type==='network'){
+      /* nodes connected in a network */
+      const nodes=Array.from({length:6},(_,i)=>({
+        x:W/2+Math.cos(t*.3+i*Math.PI/3)*W*.3,
+        y:H/2+Math.sin(t*.3+i*Math.PI/3)*H*.38
+      }));
+      /* edges */
+      ctx.strokeStyle='rgba(200,100,255,.15)';ctx.lineWidth=1;
+      nodes.forEach((n,i)=>{nodes.forEach((m,j)=>{if(i!==j&&Math.random()<.05){ctx.beginPath();ctx.moveTo(n.x,n.y);ctx.lineTo(m.x,m.y);ctx.stroke();}});});
+      /* center */
+      ctx.beginPath();ctx.arc(W/2,H/2,6,0,Math.PI*2);ctx.fillStyle='rgba(200,100,255,.7)';ctx.fill();
+      /* nodes */
+      nodes.forEach(n=>{ctx.beginPath();ctx.arc(n.x,n.y,4,0,Math.PI*2);ctx.fillStyle='rgba(200,100,255,.5)';ctx.fill();});
+    }
+
+    animId=requestAnimationFrame(draw);
+  }
+
+  card.addEventListener('mouseenter',()=>{resize();run=true;draw();});
+  card.addEventListener('mouseleave',()=>{run=false;cancelAnimationFrame(animId);ctx.clearRect(0,0,W,H);});
+  card.addEventListener('click',()=>openMission(card));
+});
+
+/* ── MISSION OVERLAY ── */
+const overlay=document.getElementById('mission-overlay');
+const terminal=document.getElementById('terminal');
+const mCanvas=document.getElementById('mission-canvas');
+const mCtx=mCanvas.getContext('2d');
+let mAnimId;
+
+const MISSION_DATA={
+  blockchain:{
+    id:'MISSION 01',title:'Decentralized Exam Paper Distribution',
+    boot:`> initializing ethereum node...\n> connecting to IPFS gateway...\n> loading smart contracts...\n> encryption modules ready\n> access granted ✓`,
+    body:`<h4>// OVERVIEW</h4>
+    <p>A crowdsourced, role-based exam paper platform where <span class="highlight">2FA-authenticated educators</span> submit questions, admin-vetted and immutably logged on Ethereum via Solidity smart contracts, stored on IPFS with end-to-end encryption.</p>
+    <h4>// KEY FEATURES</h4>
+    <p>Automated paper generation selects from the approved pool by syllabus and difficulty. <span class="highlight">Blockchain-locked timed release</span> to authorized representatives only.</p>
+    <h4>// STACK</h4>`,
+    tags:['Ethereum','Solidity','IPFS','Smart Contracts','Cryptography','2FA','Role-based Auth']
+  },
+  vision:{
+    id:'MISSION 02',title:'Criminal Face Detection System',
+    boot:`> initializing OpenCV...\n> loading Haar cascade classifiers...\n> training LBPH recognizer...\n> camera pipeline ready\n> access granted ✓`,
+    body:`<h4>// OVERVIEW</h4>
+    <p>A surveillance-based face recognition system using <span class="highlight">OpenCV</span>, combining image preprocessing, Haar cascades, and Local Binary Pattern Histogram to improve suspect identification accuracy from image and video data.</p>
+    <h4>// PIPELINE</h4>
+    <p>Image preprocessing → Haar cascade face detection → <span class="highlight">LBPH feature extraction</span> → identity matching against criminal database.</p>
+    <h4>// STACK</h4>`,
+    tags:['OpenCV','Python','Haar Cascades','LBPH','Image Processing','Video Analysis']
+  },
+  iot:{
+    id:'MISSION 03',title:'Automatic Poster Unfurler',
+    boot:`> initializing Arduino UNO...\n> calibrating stepper motors...\n> checking coupler alignment...\n> system armed\n> access granted ✓`,
+    body:`<h4>// OVERVIEW</h4>
+    <p>An <span class="highlight">IoT-based automated poster unveiling system</span> using Arduino UNO and stepper motors. Ensured robust coupling by precision-sizing the coupler for seamless mechanical alignment.</p>
+    <h4>// ENGINEERING</h4>
+    <p>Stepper motor control via PWM signals, <span class="highlight">custom coupler design</span> for zero-slip torque transmission, timed triggering via microcontroller.</p>
+    <h4>// STACK</h4>`,
+    tags:['Arduino UNO','IoT','Stepper Motors','Embedded C','PWM Control','Mechanical Design']
+  },
+  traffic:{
+    id:'MISSION 04',title:'Real-Time Car Counter',
+    boot:`> initializing OpenCV stream...\n> loading background subtractor...\n> calibrating ROI zones...\n> vehicle tracker active\n> access granted ✓`,
+    body:`<h4>// OVERVIEW</h4>
+    <p>A real-time vehicle tracking system using <span class="highlight">OpenCV and Python</span>, enhancing traffic monitoring efficiency for video-based data analysis.</p>
+    <h4>// HOW IT WORKS</h4>
+    <p>Background subtraction isolates moving objects → contour detection identifies vehicles → <span class="highlight">line-crossing logic</span> counts entries and exits per lane.</p>
+    <h4>// STACK</h4>`,
+    tags:['OpenCV','Python','Background Subtraction','Contour Detection','Real-Time Video']
+  },
+  network:{
+    id:'MISSION 05',title:'Online Voting System',
+    boot:`> initializing Apache server...\n> connecting MySQL database...\n> loading auth modules...\n> encryption layer active\n> access granted ✓`,
+    body:`<h4>// OVERVIEW</h4>
+    <p>A secure web-based voting system with <span class="highlight">robust admin access control</span> and voter authentication, ensuring each vote is cast exactly once.</p>
+    <h4>// SECURITY</h4>
+    <p>XML-validated voter registration, <span class="highlight">MySQL session management</span>, admin-only result access, and audit trail logging.</p>
+    <h4>// STACK</h4>`,
+    tags:['HTML','XML','Apache','MySQL','Session Auth','Admin Panel']
+  }
+};
+
+function typeText(text){
+  terminal.innerHTML='';
+  const lines=text.split('\n');
+  let li=0,ci=0;
+  function tick(){
+    if(li>=lines.length)return;
+    if(ci<lines[li].length){terminal.innerHTML+=lines[li][ci];ci++;}
+    else{terminal.innerHTML+='<br>';li++;ci=0;}
+    setTimeout(tick,li===0&&ci===0?0:18);
+  }
+  tick();
+}
+
+function runMissionVis(type){
+  cancelAnimationFrame(mAnimId);
+  const W=mCanvas.width=mCanvas.offsetWidth||860;
+  const H=mCanvas.height=220;
+  let t=0;
+
+  function draw(){
+    t+=.02;
+    mCtx.clearRect(0,0,W,H);
+    mCtx.fillStyle='#050508';mCtx.fillRect(0,0,W,H);
+
+    if(type==='blockchain'){
+      /* flowing chain of blocks */
+      for(let i=0;i<12;i++){
+        const x=((i*80-t*40)%W+W)%W,y=H/2+Math.sin(t+i*.5)*30;
+        mCtx.strokeStyle='rgba(100,180,255,.4)';mCtx.lineWidth=1;mCtx.strokeRect(x-20,y-15,40,30);
+        mCtx.strokeStyle='rgba(100,180,255,.15)';mCtx.beginPath();mCtx.moveTo(x+20,y);mCtx.lineTo(x+60,y);mCtx.stroke();
+        mCtx.fillStyle='rgba(100,180,255,.1)';mCtx.fillRect(x-20,y-15,40,30);
+      }
+    }
+    if(type==='vision'){
+      const scanY=(t*40)%H;
+      mCtx.fillStyle='rgba(255,100,100,.15)';mCtx.fillRect(0,scanY,W,3);
+      /* grid of scan dots */
+      mCtx.fillStyle='rgba(255,100,100,.06)';
+      for(let x=0;x<W;x+=16){for(let y=0;y<H;y+=16){mCtx.fillRect(x,y,1,1);}}
+      /* detection rect */
+      mCtx.strokeStyle='rgba(255,100,100,.5)';mCtx.lineWidth=1.5;mCtx.strokeRect(W*.3,H*.1,W*.4,H*.8);
+    }
+    if(type==='iot'){
+      for(let i=0;i<5;i++){
+        const r=((t*.6+i*.25)%1)*Math.min(W,H)*.42;
+        const a=(1-((t*.6+i*.25)%1))*.5;
+        mCtx.beginPath();mCtx.arc(W/2,H/2,r,0,Math.PI*2);
+        mCtx.strokeStyle=`rgba(100,255,180,${a})`;mCtx.lineWidth=1;mCtx.stroke();
+      }
+      mCtx.beginPath();mCtx.arc(W/2,H/2,7,0,Math.PI*2);mCtx.fillStyle='rgba(100,255,180,.9)';mCtx.fill();
+    }
+    if(type==='traffic'){
+      for(let l=0;l<4;l++){
+        const y=H*(l+1)/5;
+        mCtx.strokeStyle='rgba(255,180,100,.08)';mCtx.lineWidth=1;mCtx.setLineDash([10,10]);
+        mCtx.beginPath();mCtx.moveTo(0,y);mCtx.lineTo(W,y);mCtx.stroke();mCtx.setLineDash([]);
+        for(let v=0;v<4;v++){
+          const vx=((t*60*(1+l*.2)+v*220)%W+W)%W;
+          mCtx.fillStyle='rgba(255,180,100,.3)';mCtx.fillRect(vx-12,y-5,22,10);
+          mCtx.fillStyle='rgba(255,220,100,.7)';mCtx.fillRect(vx+8,y-3,4,6);
+        }
+      }
+    }
+    if(type==='network'){
+      const nodes=Array.from({length:8},(_,i)=>({x:W/2+Math.cos(t*.2+i*Math.PI/4)*W*.35,y:H/2+Math.sin(t*.2+i*Math.PI/4)*H*.38}));
+      mCtx.strokeStyle='rgba(200,100,255,.1)';mCtx.lineWidth=1;
+      nodes.forEach((n,i)=>nodes.forEach((m,j)=>{if(i<j){mCtx.beginPath();mCtx.moveTo(n.x,n.y);mCtx.lineTo(m.x,m.y);mCtx.stroke();}}));
+      nodes.forEach(n=>{mCtx.beginPath();mCtx.arc(n.x,n.y,4,0,Math.PI*2);mCtx.fillStyle='rgba(200,100,255,.6)';mCtx.fill();});
+      mCtx.beginPath();mCtx.arc(W/2,H/2,8,0,Math.PI*2);mCtx.fillStyle='rgba(200,100,255,.9)';mCtx.fill();
+    }
+    mAnimId=requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+function openMission(card){
+  const type=card.dataset.type;
+  const data=MISSION_DATA[type];
+  document.getElementById('mission-id').textContent=data.id;
+  document.getElementById('mission-title-full').textContent=data.title;
+  const body=document.getElementById('mission-body');
+  body.innerHTML=data.body+`<div class="mission-tags">${data.tags.map(t=>`<span class="ptag b">${t}</span>`).join('')}</div>`;
+  overlay.classList.add('active');
+  typeText(data.boot);
+  setTimeout(()=>runMissionVis(type),300);
+}
+
+document.getElementById('close-mission').onclick=()=>{
+  overlay.classList.remove('active');
+  cancelAnimationFrame(mAnimId);
+};
+overlay.addEventListener('click',e=>{if(e.target===overlay){overlay.classList.remove('active');cancelAnimationFrame(mAnimId);}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){overlay.classList.remove('active');cancelAnimationFrame(mAnimId);}});
+
+/* ── INTERSECTION OBSERVER ── */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.classList.add('risen');
+    e.target.querySelectorAll('.skill-fill').forEach(f=>setTimeout(()=>f.style.width=f.dataset.w+'%',200));
+    e.target.querySelectorAll('.proj-card').forEach(c=>setTimeout(()=>c.classList.add('risen'),+c.dataset.delay+80));
+  });
+},{threshold:.08});
+document.querySelectorAll('.rise,.proj-card').forEach(el=>io.observe(el));
+
+const sio=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting)document.querySelectorAll('.nav-link').forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));
+  });
+},{threshold:.3});
+document.querySelectorAll('section[id]').forEach(s=>sio.observe(s));
+
+/* ── HOBBY CANVASES ── */
+function hobbyCanvas(id,drawFn){
+  const c=document.getElementById(id);if(!c)return;
+  const ctx=c.getContext('2d');
+  let t=0;
+  function resize(){c.width=c.offsetWidth*2;c.height=120;ctx.scale(2,1);}
+  function frame(){t+=.02;ctx.clearRect(0,0,c.width,c.height);drawFn(ctx,c.offsetWidth,60,t);requestAnimationFrame(frame);}
+  resize();frame();
+}
+
+/* Music — sine wave like a raga phrase */
+hobbyCanvas('hc-music',(ctx,W,H,t)=>{
+  ctx.strokeStyle='#64B4FF';ctx.lineWidth=1.5;ctx.beginPath();
+  for(let x=0;x<W;x++){
+    const freq=2.5+Math.sin(x*.02+t)*.8;
+    const y=H+Math.sin(x*.04*freq+t)*18*Math.sin(x*.008+t*.3);
+    x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  /* second subtler harmonic */
+  ctx.strokeStyle='rgba(100,180,255,.3)';ctx.lineWidth=1;ctx.beginPath();
+  for(let x=0;x<W;x++){
+    const y=H+Math.sin(x*.08+t*1.5)*8;
+    x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+});
+
+/* Dance — flowing curves like a mudra */
+hobbyCanvas('hc-dance',(ctx,W,H,t)=>{
+  const pts=6;
+  ctx.strokeStyle='#FF6AB0';ctx.lineWidth=1.5;
+  for(let layer=0;layer<2;layer++){
+    ctx.beginPath();
+    const off=layer*.4;
+    for(let i=0;i<=60;i++){
+      const s=i/60;
+      const x=s*W;
+      const y=H+Math.sin(s*Math.PI*pts+t+off)*20*Math.sin(s*Math.PI);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.globalAlpha=layer===0?1:.3;ctx.stroke();ctx.globalAlpha=1;
+  }
+  /* travelling dot like an ankle bell */
+  const prog=(t*.3)%1;
+  const dx=prog*W;
+  const dy=H+Math.sin(prog*Math.PI*pts+t)*20*Math.sin(prog*Math.PI);
+  ctx.beginPath();ctx.arc(dx,dy,3,0,Math.PI*2);
+  ctx.fillStyle='#FF6AB0';ctx.fill();
+});
+
+/* Sport — bouncing shuttlecock arc */
+hobbyCanvas('hc-sport',(ctx,W,H,t)=>{
+  const b=(t*.4)%1;
+  /* arc trail */
+  ctx.strokeStyle='rgba(100,255,180,.3)';ctx.lineWidth=1;ctx.beginPath();
+  for(let i=0;i<=40;i++){
+    const s=i/40;const px=s*W;const py=H+40-Math.sin(s*Math.PI)*38;
+    i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+  /* ball */
+  const bx=b*W,by=H+40-Math.sin(b*Math.PI)*38;
+  ctx.beginPath();ctx.arc(bx,by,4,0,Math.PI*2);
+  ctx.fillStyle='#64FFB4';ctx.fill();
+  /* ripple at peak */
+  if(b>.45&&b<.55){
+    const r=(b-.45)*200;
+    ctx.beginPath();ctx.arc(W/2,H+2,r,0,Math.PI*2);
+    ctx.strokeStyle=`rgba(100,255,180,${.5-(b-.45)*5})`;ctx.lineWidth=1;ctx.stroke();
+  }
+});
+
+/* Books — pages turning */
+hobbyCanvas('hc-books',(ctx,W,H,t)=>{
+  const cx=W/2,cy=H;
+  /* pages fanning out */
+  for(let i=0;i<8;i++){
+    const angle=-Math.PI*.5+((i/7)*Math.PI*.35)+Math.sin(t*.5+i*.3)*.04;
+    const len=35+i*2;
+    ctx.save();ctx.translate(cx,cy+10);ctx.rotate(angle);
+    ctx.strokeStyle=`rgba(255,180,100,${.15+i*.1})`;ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,-len);ctx.stroke();
+    ctx.restore();
+  }
+  /* spine */
+  ctx.strokeStyle='rgba(255,180,100,.8)';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(cx-2,cy-40);ctx.lineTo(cx-2,cy+10);ctx.stroke();
+  /* travelling light across page */
+  const lx=cx-2+Math.sin(t)*30;
+  ctx.beginPath();ctx.arc(lx,cy-20,2,0,Math.PI*2);
+  ctx.fillStyle='rgba(255,220,150,.8)';ctx.fill();
+});
+
+/* ── EXPERIENCE CARD HOVER ANIMATIONS ── */
+document.querySelectorAll('.exp-card-hover').forEach(card=>{
+  const c=card.querySelector('canvas');
+  const ctx=c.getContext('2d');
+  const type=card.dataset.exp;
+  let W,H,t=0,run=false,animId;
+
+  function resize(){W=c.width=card.offsetWidth;H=c.height=card.offsetHeight;}
+
+  function draw(){
+    if(!run)return;
+    t+=.018;
+    ctx.clearRect(0,0,W,H);
+
+    if(type==='pelatro'){
+      /* data pipeline — flowing particles along horizontal tracks */
+      for(let row=0;row<4;row++){
+        const y=H*.2+row*(H*.2);
+        ctx.strokeStyle='rgba(100,180,255,.06)';ctx.lineWidth=1;ctx.setLineDash([4,8]);
+        ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();ctx.setLineDash([]);
+        for(let p=0;p<3;p++){
+          const x=((t*60*(1+row*.2)+p*120)%W+W)%W;
+          const alpha=.25+Math.sin(t*2+p)*.15;
+          ctx.beginPath();ctx.arc(x,y,2,0,Math.PI*2);
+          ctx.fillStyle=`rgba(100,180,255,${alpha})`;ctx.fill();
+          /* tail */
+          ctx.strokeStyle=`rgba(100,180,255,${alpha*.4})`;ctx.lineWidth=1;
+          ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(Math.max(0,x-20),y);ctx.stroke();
+        }
+      }
+    }
+
+    if(type==='node'){
+      /* social network nodes pulsing */
+      const nodes=[
+        {x:W*.2,y:H*.3},{x:W*.5,y:H*.2},{x:W*.8,y:H*.35},
+        {x:W*.3,y:H*.7},{x:W*.65,y:H*.75},{x:W*.5,y:H*.5}
+      ];
+      ctx.strokeStyle='rgba(200,100,255,.08)';ctx.lineWidth=1;
+      nodes.forEach((a,i)=>nodes.forEach((b,j)=>{
+        if(i<j){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+      }));
+      nodes.forEach((n,i)=>{
+        const pulse=.5+Math.sin(t*1.5+i)*.3;
+        ctx.beginPath();ctx.arc(n.x,n.y,3+pulse*2,0,Math.PI*2);
+        ctx.fillStyle=`rgba(200,100,255,${.2+pulse*.2})`;ctx.fill();
+      });
+    }
+
+    animId=requestAnimationFrame(draw);
+  }
+
+  card.addEventListener('mouseenter',()=>{resize();run=true;draw();});
+  card.addEventListener('mouseleave',()=>{run=false;cancelAnimationFrame(animId);ctx.clearRect(0,0,W,H);});
+});
+</script>
+</body>
+</html>
